@@ -1,18 +1,31 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/sklinkert/go-ddd/internal/application/services"
 	postgres2 "github.com/sklinkert/go-ddd/internal/infrastructure/db/postgres"
 	"github.com/sklinkert/go-ddd/internal/interface/api/rest"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 )
 
 func main() {
-	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	dsn := "host=" + os.Getenv("DB_HOST") +
+		" user=" + os.Getenv("DB_USER") +
+		" password=" + os.Getenv("DB_PASSWORD") +
+		" dbname=" + os.Getenv("DB_NAME") +
+		" port=" + os.Getenv("DB_PORT") +
+		" sslmode=" + os.Getenv("DB_SSLMODE")
 	port := ":8080"
 
 	gormDB, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -20,7 +33,7 @@ func main() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	//gormDB.AutoMigrate()
+	gormDB.AutoMigrate(&postgres2.Product{}, &postgres2.Seller{})
 
 	productRepo := postgres2.NewGormProductRepository(gormDB)
 	sellerRepo := postgres2.NewGormSellerRepository(gormDB)
@@ -32,7 +45,7 @@ func main() {
 	rest.NewProductController(e, productService)
 	rest.NewSellerController(e, sellerService)
 
-	if err := e.Start(port); err != nil {
+	if err := e.Start("127.0.0.1" + port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }
