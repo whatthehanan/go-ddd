@@ -10,11 +10,14 @@ import (
 	"github.com/whatthehanan/go-ddd/internal/interface/api/rest"
 )
 
-func main() {
-	err := godotenv.Load()
-	if err != nil {
+func loadEnvironmentVariables() {
+	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
+}
+
+func main() {
+	loadEnvironmentVariables()
 
 	// initialize database connection and repositories
 	gormDB := postgres.NewConnection(true)
