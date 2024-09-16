@@ -2,16 +2,12 @@ package main
 
 import (
 	"log"
-	"os"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
-	"github.com/sklinkert/go-ddd/internal/application/services"
-	postgres2 "github.com/sklinkert/go-ddd/internal/infrastructure/db/postgres"
-	"github.com/sklinkert/go-ddd/internal/interface/api/rest"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"github.com/whatthehanan/go-ddd/internal/application/services"
+	"github.com/whatthehanan/go-ddd/internal/infrastructure/db/postgres"
+	"github.com/whatthehanan/go-ddd/internal/interface/api/rest"
 )
 
 func main() {
@@ -20,31 +16,25 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	dsn := "host=" + os.Getenv("DB_HOST") +
-		" user=" + os.Getenv("DB_USER") +
-		" password=" + os.Getenv("DB_PASSWORD") +
-		" dbname=" + os.Getenv("DB_NAME") +
-		" port=" + os.Getenv("DB_PORT") +
-		" sslmode=" + os.Getenv("DB_SSLMODE")
-	port := ":8080"
-
-	gormDB, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// initialize database connection and repositories
+	gormDB, err := postgres.NewConnection()
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	gormDB.AutoMigrate(&postgres2.Product{}, &postgres2.Seller{})
+	gormDB.AutoMigrate(&postgres.Product{}, &postgres.Seller{})
+	productRepo := postgres.NewGormProductRepository(gormDB)
+	sellerRepo := postgres.NewGormSellerRepository(gormDB)
 
-	productRepo := postgres2.NewGormProductRepository(gormDB)
-	sellerRepo := postgres2.NewGormSellerRepository(gormDB)
-
+	// initialize services
 	productService := services.NewProductService(productRepo, sellerRepo)
 	sellerService := services.NewSellerService(sellerRepo)
 
+	// initialize http server and controllers
 	e := echo.New()
 	rest.NewProductController(e, productService)
 	rest.NewSellerController(e, sellerService)
-
+	port := ":8080"
 	if err := e.Start("127.0.0.1" + port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}

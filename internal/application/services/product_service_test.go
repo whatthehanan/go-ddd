@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/sklinkert/go-ddd/internal/application/command"
-	"github.com/sklinkert/go-ddd/internal/domain/entities"
+	"github.com/whatthehanan/go-ddd/internal/application/command"
+	"github.com/whatthehanan/go-ddd/internal/domain/entities"
 	"testing"
 )
 

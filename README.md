@@ -62,7 +62,7 @@ Domain-Driven Design is a methodology and design pattern used to build complex e
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/sklinkert/go-ddd.git
+git clone https://github.com/whatthehanan/go-ddd.git
 cd go-ddd
 go mod download
 go run ./...

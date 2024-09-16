@@ -2,11 +2,11 @@ package rest_test
 
 import (
 	"github.com/google/uuid"
-	"github.com/sklinkert/go-ddd/internal/application/command"
-	"github.com/sklinkert/go-ddd/internal/application/mapper"
-	"github.com/sklinkert/go-ddd/internal/application/query"
-	"github.com/sklinkert/go-ddd/internal/domain/entities"
 	"github.com/stretchr/testify/mock"
+	"github.com/whatthehanan/go-ddd/internal/application/command"
+	"github.com/whatthehanan/go-ddd/internal/application/mapper"
+	"github.com/whatthehanan/go-ddd/internal/application/query"
+	"github.com/whatthehanan/go-ddd/internal/domain/entities"
 	"time"
 )
 

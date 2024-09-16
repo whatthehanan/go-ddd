@@ -2,8 +2,8 @@ package interfaces
 
 import (
 	"github.com/google/uuid"
-	"github.com/sklinkert/go-ddd/internal/application/command"
-	"github.com/sklinkert/go-ddd/internal/application/query"
+	"github.com/whatthehanan/go-ddd/internal/application/command"
+	"github.com/whatthehanan/go-ddd/internal/application/query"
 )
 
 type ProductService interface {

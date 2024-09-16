@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"github.com/sklinkert/go-ddd/internal/domain/entities"
+	"github.com/whatthehanan/go-ddd/internal/domain/entities"
 )
 
 // toDBSeller maps domain Seller entity to DB persistence model.

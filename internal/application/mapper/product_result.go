@@ -1,8 +1,8 @@
 package mapper
 
 import (
-	"github.com/sklinkert/go-ddd/internal/application/common"
-	"github.com/sklinkert/go-ddd/internal/domain/entities"
+	"github.com/whatthehanan/go-ddd/internal/application/common"
+	"github.com/whatthehanan/go-ddd/internal/domain/entities"
 )
 
 func NewProductResultFromValidatedEntity(product *entities.ValidatedProduct) *common.ProductResult {

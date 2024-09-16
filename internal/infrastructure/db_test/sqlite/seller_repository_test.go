@@ -1,11 +1,11 @@
 package sqlite_test
 
 import (
-	"github.com/sklinkert/go-ddd/internal/infrastructure/db/postgres"
+	"github.com/whatthehanan/go-ddd/internal/infrastructure/db/postgres"
 	"testing"
 
-	"github.com/sklinkert/go-ddd/internal/domain/entities"
 	"github.com/stretchr/testify/assert"
+	"github.com/whatthehanan/go-ddd/internal/domain/entities"
 )
 
 func TestSellerRepositorySave(t *testing.T) {

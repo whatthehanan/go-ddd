@@ -1,8 +1,8 @@
 package sqlite_test
 
 import (
-	"github.com/sklinkert/go-ddd/internal/domain/entities"
-	"github.com/sklinkert/go-ddd/internal/infrastructure/db/postgres"
+	"github.com/whatthehanan/go-ddd/internal/domain/entities"
+	"github.com/whatthehanan/go-ddd/internal/infrastructure/db/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"testing"

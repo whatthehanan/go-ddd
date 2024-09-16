@@ -1,6 +1,6 @@
 package request
 
-import "github.com/sklinkert/go-ddd/internal/application/command"
+import "github.com/whatthehanan/go-ddd/internal/application/command"
 
 type CreateSellerRequest struct {
 	Name string `json:"Name"`

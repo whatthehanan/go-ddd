@@ -1,6 +1,6 @@
 package command
 
-import "github.com/sklinkert/go-ddd/internal/application/common"
+import "github.com/whatthehanan/go-ddd/internal/application/common"
 
 type CreateProductCommandResult struct {
 	Result *common.ProductResult
