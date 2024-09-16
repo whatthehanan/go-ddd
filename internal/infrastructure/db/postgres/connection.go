@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"log"
 	"os"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -17,6 +18,15 @@ func getDatabaseConnectionString() string {
 		" sslmode=" + os.Getenv("DB_SSLMODE")
 }
 
-func NewConnection() (*gorm.DB, error) {
-	return gorm.Open(postgres2.Open(getDatabaseConnectionString()), &gorm.Config{})
+func NewConnection(shouldMigrate bool) *gorm.DB {
+	gormDB, err := gorm.Open(postgres2.Open(getDatabaseConnectionString()), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+
+	if shouldMigrate {
+		gormDB.AutoMigrate(Product{}, Seller{})
+	}
+
+	return gormDB
 }

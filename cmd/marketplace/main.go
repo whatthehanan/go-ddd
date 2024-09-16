@@ -17,12 +17,7 @@ func main() {
 	}
 
 	// initialize database connection and repositories
-	gormDB, err := postgres.NewConnection()
-	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
-	}
-
-	gormDB.AutoMigrate(&postgres.Product{}, &postgres.Seller{})
+	gormDB := postgres.NewConnection(true)
 	productRepo := postgres.NewGormProductRepository(gormDB)
 	sellerRepo := postgres.NewGormSellerRepository(gormDB)
 
