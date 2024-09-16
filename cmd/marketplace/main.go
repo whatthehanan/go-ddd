@@ -20,7 +20,7 @@ func main() {
 	loadEnvironmentVariables()
 
 	// initialize database connection and repositories
-	gormDB := postgres.NewConnection(true)
+	gormDB := postgres.NewConnection(postgres.ConnectionConfig{ShouldMigrate: true})
 	productRepo := postgres.NewGormProductRepository(gormDB)
 	sellerRepo := postgres.NewGormSellerRepository(gormDB)
 

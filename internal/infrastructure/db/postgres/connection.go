@@ -9,6 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
+type ConnectionConfig struct {
+	ShouldMigrate bool
+}
+
 func getDatabaseConnectionString() string {
 	return "host=" + os.Getenv("DB_HOST") +
 		" user=" + os.Getenv("DB_USER") +
@@ -18,13 +22,13 @@ func getDatabaseConnectionString() string {
 		" sslmode=" + os.Getenv("DB_SSLMODE")
 }
 
-func NewConnection(shouldMigrate bool) *gorm.DB {
+func NewConnection(config ConnectionConfig) *gorm.DB {
 	gormDB, err := gorm.Open(postgres2.Open(getDatabaseConnectionString()), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	if shouldMigrate {
+	if config.ShouldMigrate {
 		gormDB.AutoMigrate(Product{}, Seller{})
 	}
 
